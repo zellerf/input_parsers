@@ -1,2 +1,2 @@
 import QchemParser
-import calculation
+import calc_parser

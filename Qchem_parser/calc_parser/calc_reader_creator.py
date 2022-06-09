@@ -1,8 +1,7 @@
 import re
 import sys
 
-
-class CalcCreator:
+class CalcParserCreator:
 
     def __init__(self, file):
 
@@ -11,7 +10,7 @@ class CalcCreator:
             sys.exit(1)
         self.__file = file
 
-    # read inputsection from file containing Q-Chem calculation
+    # read inputsection from file containing Q-Chem calc_parser
     def __get_input__(self):
         # search for start of input
         inputstart = re.search('-{62}\nUser input:\n-{62}', self.__file)
@@ -21,12 +20,12 @@ class CalcCreator:
 
         # error if input patterns are not found
         if not bool(inputstart) or not bool(inputend):
-            print("Error: calculation does not have an input.")
+            print("Error: calc_parser does not have an input.")
             sys.exit(1)
         userinput = self.__file[inputstart.end():inputstart.end() + inputend.start()]
         return userinput
 
-    # get jobtype of calculation input string
+    # get jobtype of calc_parser input string
     def __get_type__(self, userinput):
 
         # search for jobtype line

@@ -1,6 +1,6 @@
 import sys
 import re
-from calculation import calculations
+import calc_parser as cp
 
 
 class QchemParser:
@@ -29,12 +29,12 @@ class QchemParser:
         calcs = re.split('Welcome to Q-Chem', file)
 
         if len(calcs) == 1:
-            print("Error: no Q-Chem calculation in file " + self.path)
+            print("Error: no Q-Chem calc_parser in file " + self.path)
             sys.exit(1)
 
         # skip first element in calcs since always only a blank
         for i in calcs[1:]:
-            self.calculations.append(calculations.CalcCreator(i).create_calc_parser())
+            self.calculations.append(cp.calc_reader_creator.CalcParserCreator(i).create_calc_parser())
 
     # return list of calculations
     def get_calcs(self):
