@@ -1,12 +1,12 @@
 import sys
 import re
-import calc_parser as cp
+from .calc_parser import ParserFactory
 
 
-class QchemParser:
+class Read:
 
-    # list of calculations found in file
-    calculations = []
+    # list contains specific parser for each calculation
+    __calcs = []
 
     # class constructor will read file and save it as list of calculations
     def __init__(self, path):
@@ -34,8 +34,8 @@ class QchemParser:
 
         # skip first element in calcs since always only a blank
         for i in calcs[1:]:
-            self.calculations.append(cp.calc_reader_creator.CalcParserCreator(i).create_calc_parser())
+            self.__calcs.append(ParserFactory(i).create_parser())
 
     # return list of calculations
     def get_calcs(self):
-        return self.calculations
+        return self.__calcs

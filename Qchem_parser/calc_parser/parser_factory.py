@@ -1,7 +1,10 @@
 import re
 import sys
+from .freq_parser import FreqParser
+from .opt_parser import OptParser
+from .base_parser import BaseParser
 
-class CalcParserCreator:
+class ParserFactory:
 
     def __init__(self, file):
 
@@ -43,11 +46,17 @@ class CalcParserCreator:
 
         return jobtype
 
-    def create_calc_parser(self):
+    def create_parser(self):
         input = self.__get_input__()
         jobtype = self.__get_type__(input)
-
-       #TODO: make real calc parser objects
         print(jobtype)
-        return jobtype
+        if re.fullmatch(jobtype, 'frequency', flags=re.I):
+            print('return freq parser')
+            return FreqParser(self.__file, input)
+        elif re.fullmatch(jobtype, 'opt', flags=re.I):
+            print('return opt parser')
+            return OptParser(self.__file, input)
+        else:
+            print('returning base parser')
+            return BaseParser(self.__file, input)
 
